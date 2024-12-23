@@ -1,0 +1,5 @@
+jax==0.4.23
+jaxlib==0.4.23+cuda12.cudnn89
+matplotlib==3.7.1
+numpy==1.25.0
+tqdm==4.66.1
