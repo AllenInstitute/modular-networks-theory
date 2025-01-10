@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -ex
 
-python figure_eigvals_activities.py
+#python figure_weights_visualizations.py
+python figure_phase_diagrams.py
 
 
 
