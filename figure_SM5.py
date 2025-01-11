@@ -49,9 +49,10 @@ if debug:
 else:
     qtab    = np.linspace(0.3, 0.9, 50)
     P_seqs  = ( 
-                (10_000,),
+                (3_000,),
                 (100,100),
-                (22,22,22)
+                (22,22,22),
+                (20,10,10,5)
               )
     steps_lyap = 200
     steps_sim = 700
@@ -76,6 +77,7 @@ if load and os.path.exists(fname_pkl):
         data_loaded = pickle.load(f)
         stats_all = data_loaded['stats_all']
         stats_all2 = data_loaded['stats_all2']
+        print(data_loaded)
 else:
     print("Simulating...")
     for Ps in P_seqs:
@@ -156,7 +158,6 @@ for key, value in stats_all2['$q_L$'].items():
         axs[1].plot(value[1], value[0], 'k--', alpha=0.7, lw=2)
     else:
         axs[1].plot(value[1], value[0], '.-', lw=2, label=key)
-#axs[1].set_xlabel('$\hat{q}_L$')
 axs[1].set_xlabel('$q_L$')
 axs[1].set_ylabel('$\\sigma_L$')
 axs[1].axhline(0, ls='--', color='black', alpha=0.5, lw=1)

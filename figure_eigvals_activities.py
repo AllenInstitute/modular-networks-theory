@@ -27,8 +27,6 @@ P = 200
 steps_init = 200
 steps_sim = 20
 
-#sigma_all = [0.5, 5.0, 5.0, 1.0]
-#sigma_mu_all = [0.5, 0.5, 8.0, 5.0]
 sigma_all = [0.5, 4.0, 4.0, 1.0]
 sigma_mu_all = [0.5, 0.5, 6.0, 5.0]
 
@@ -41,7 +39,6 @@ colors = plt.cm.Dark2.colors
 plt.rcParams['axes.prop_cycle'] = plt.cycler(color=colors)
     
 net = RNN2L()
-#key = jax.random.PRNGKey(seed)
 
 def decompose(X):
     M = net.population_activities(X, N0, P)
@@ -52,14 +49,6 @@ def decompose(X):
 
 fig, axs = plt.subplots(4, len(sigma_all), figsize=(len(sigma_all)*5, 17), constrained_layout=True)
 i = 0
-#gs = gridspec.GridSpec(3, 3, height_ratios=[1, 1.5, 1])
-
-def custom_axis_off(ax):
-    ax.spines['top'].set_visible(False)
-    ax.spines['right'].set_visible(False)
-    ax.spines['left'].set_visible(False)
-    ax.spines['bottom'].set_visible(False)
-    ax.tick_params(left=False, bottom=False, labelleft=False, labelbottom=False)
 
 for sigma, sigma_mu, label in tqdm( zip(sigma_all, sigma_mu_all, labels) ): 
     axs[0,i].set_title(label)
@@ -79,7 +68,6 @@ for sigma, sigma_mu, label in tqdm( zip(sigma_all, sigma_mu_all, labels) ):
     
     ### Eigenvalues
     # Generate weights
-    #key, subkey = jax.random.split(key)
     J = net.generate_weights(subkey, 
                             N0=N0_eigvals, 
                             P=P_eigvals, 
@@ -88,9 +76,7 @@ for sigma, sigma_mu, label in tqdm( zip(sigma_all, sigma_mu_all, labels) ):
     # Plot eigenvalues
     plot_eigenvalues(J, color='black', color_circle='red', title=None, ax=axs[1,i])
     axs[1,i].axis('off')
-    #axs[1,i].set_position(axs[1,i].get_position())
 
-    #custom_axis_off(axs[1,i])     
     ### Activities and perturbations
     # Generate weights
     key, subkey = jax.random.split(key)
@@ -115,14 +101,9 @@ for sigma, sigma_mu, label in tqdm( zip(sigma_all, sigma_mu_all, labels) ):
     Mall = net.population_activities(Xall, N0, P)
     axs[3,i].plot(Mall[:,:N_plot], lw=lw, alpha=0.7)
     axs[3,i].set_ylim(ylim)
-    #if i>0:
-    #    axs[2,i].set_yticklabels([])
-    #    axs[3,i].set_yticklabels([])
     
     i += 1
 
-#axs[0,0].set_ylabel('$J$')    
-#axs[1,0].set_ylabel('Eigenvalues of $J$')
 axs[2,0].set_ylabel('$x^{1}_i$')    
 axs[3,0].set_ylabel('$m^{\\alpha}$')
 
